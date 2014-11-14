@@ -14,7 +14,7 @@ import com.itcuties.android.apps.itcsqliteexample.sql.TodoSQLiteHelper;
 /**
  * TODOs DAO object.
  * 
- * @author itcuties
+ * @author educates
  *
  */
 public class TodoDAO {
