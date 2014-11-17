@@ -45,8 +45,8 @@ public class MainActivity extends ActionBarActivity {
 		videoButton = (Button) findViewById(R.id.video);
 		mFileList = new ArrayList<MusicWrapper>();
 		mMusicSourceAryList = new ArrayList<String>();
-		mMusicSourceAryList.add("http://127.0.0.1:50080/dav/home/Music/A-Lin/%E6%88%91%E5%80%91%E6%9C%83%E6%9B%B4%E5%A5%BD%E7%9A%84/01%20Intro.m4a?session=6278047c683f80b9c8b2bc44f8a6bc43746231c9&login=user");
-		mMusicSourceAryList.add("http://127.0.0.1:50080/dav/home/Music/Avril%20Lavigne%20(%E8%89%BE%E8%96%87%E5%85%92)_Avril%20Lavigne%20feat_/Let%20Me%20Go/01%20Let%20Me%20Go.m4a?session=6278047c683f80b9c8b2bc44f8a6bc43746231c9&login=user");
+		mMusicSourceAryList.add("http://programmerguru.com/android-tutorial/wp-content/uploads/2013/04/hosannatelugu.mp3");
+		mMusicSourceAryList.add("http://programmerguru.com/android-tutorial/wp-content/uploads/2013/04/hosannatelugu.mp3");
 	}
 
 	private void setListener() {
@@ -61,9 +61,9 @@ public class MainActivity extends ActionBarActivity {
 			// TODO
 			Intent intent = new Intent();
 			Bundle bundle = new Bundle();
-//			bundle.putParcelableArrayList("musicurl",
-//					(ArrayList<? extends Parcelable>) mFileList);
-
+			bundle.putParcelableArrayList("musicurl",
+					(ArrayList<? extends Parcelable>) mFileList);
+			
 			intent.putExtras(bundle);
 			intent.setClass(getApplicationContext(), MusicActivity.class);
 			startActivity(intent);

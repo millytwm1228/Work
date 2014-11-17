@@ -1,13 +1,15 @@
 package com.musicvideo.view;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import android.app.Activity;
-import android.content.res.AssetFileDescriptor;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,23 +30,26 @@ public class MusicActivity extends Activity implements OnPreparedListener,
 
 	private Handler handler = new Handler();
 
+	private ArrayList<MusicWrapper> mFileList;
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.musiclayout);
-
+		mFileList = new ArrayList<MusicWrapper>();
+		ArrayList<Parcelable> playlist = getIntent().getExtras().getParcelableArrayList("musicurl");
 		// audioFile = this.getIntent().getStringExtra(AUDIO_FILE_NAME);
-
+		for(int i=0;i<playlist.size();i++){
+			mFileList.add((MusicWrapper) playlist.get(i));
+		}
 		mediaPlayer = new MediaPlayer();
-		mediaPlayer.reset();
 		mediaPlayer.setOnPreparedListener(this);
-
+		mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+		
 		mediaController = new MediaController(this);
 
 		try {
-//			File file = new File("http://127.0.0.1:50080/dav/home/Music/A-Lin/%E6%88%91%E5%80%91%E6%9C%83%E6%9B%B4%E5%A5%BD%E7%9A%84/01%20Intro.m4a?session=6278047c683f80b9c8b2bc44f8a6bc43746231c9&login=user"); 
-//			FileInputStream fis = new FileInputStream(file); 
-//			mediaPlayer.setDataSource(fis.getFD()); 
-			mediaPlayer.setDataSource("http://127.0.0.1:50080/dav/home/Music/Avril%20Lavigne%20(%E8%89%BE%E8%96%87%E5%85%92)_Avril%20Lavigne%20feat_/Let%20Me%20Go/01%20Let%20Me%20Go.m4a?session=6278047c683f80b9c8b2bc44f8a6bc43746231c9&login=user");
+			
+			mediaPlayer.setDataSource(mFileList.get(0).musicPath);
 //			AssetFileDescriptor descriptor = getAssets().openFd("test.mp3");
 //			mediaPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
 			// mediaPlayer.setDataSource(audioFile);
@@ -116,7 +121,7 @@ public class MusicActivity extends Activity implements OnPreparedListener,
 
 	// --------------------------------------------------------------------------------
 
-	public void onPrepared(MediaPlayer mediaPlayer) {
+	public void onPrepared(final MediaPlayer mediaPlayer) {
 		Log.d(TAG, "onPrepared");
 		mediaController.setMediaPlayer(this);
 		mediaController.setAnchorView(findViewById(R.id.musiclayout));
@@ -125,6 +130,24 @@ public class MusicActivity extends Activity implements OnPreparedListener,
 			@Override
 			public void onClick(View v) {
 				Log.i("music", "next");
+				try {
+					mediaPlayer.reset();
+					mediaPlayer.setDataSource(mFileList.get(1).musicPath);
+					mediaPlayer.prepare();
+					mediaPlayer.start();
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			}
 		}, new OnClickListener() {
