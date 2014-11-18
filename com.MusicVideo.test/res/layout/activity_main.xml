@@ -19,12 +19,20 @@
         android:text="Play Music" />
 
     <Button
+        android:id="@+id/photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/music"
+        android:layout_centerVertical="true"
+        android:text="Play Photo" />
+
+    <Button
         android:id="@+id/video"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/music"
-        android:layout_below="@+id/music"
-        android:layout_marginTop="42dp"
+        android:layout_above="@+id/photo"
+        android:layout_alignLeft="@+id/photo"
+        android:layout_marginBottom="34dp"
         android:text="Play Video" />
 
 </RelativeLayout>

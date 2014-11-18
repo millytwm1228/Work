@@ -4,5 +4,8 @@
     <string name="app_name">com.MusicVideo.test</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="lightning">Natural Lightning</string>
+    <string name="color_baloons">Color Baloons</string>
+    <string name="natural_wall">Natural Wall</string>
 
 </resources>
