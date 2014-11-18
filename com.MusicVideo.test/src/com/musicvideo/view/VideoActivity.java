@@ -7,42 +7,52 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
 import com.example.com.musicvideo.test.R;
 
-public class VideoActivity extends Activity{
+public class VideoActivity extends Activity {
+
+	protected static final String TAG = VideoActivity.class.getName();
 
 	private VideoView videoView;
 
+	private ArrayList<DataWrapper> mFileList;
+
+	protected int mPlayPosition;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.videolayout);
-		getIntentValues();
+
 		initViews();
+
+		getIntentValue();
+
 		initController();
+
+		playVideo(0);
+
 		setVideoEvent();
 	}
-	
-	
+
 	private void setVideoEvent() {
 		videoView.setOnPreparedListener(new OnPreparedListener() {
-			
+
 			@Override
 			public void onPrepared(MediaPlayer mp) {
 				mp.start();
-				
 			}
 		});
-		
-	}
 
+	}
 
 	private void initController() {
 		final MediaController mediaController = new MediaController(this) {
@@ -57,8 +67,6 @@ public class VideoActivity extends Activity{
 			public void show(int timeout) {
 				super.show(0);
 			}
-			
-			
 
 			@Override
 			public void hide() {
@@ -82,34 +90,55 @@ public class VideoActivity extends Activity{
 					OnClickListener prev) {
 				// TODO Auto-generated method stub
 				super.setPrevNextListeners(next, prev);
+				Log.i(TAG, "setPrevNextListeners " + next + " " + prev);
+
 			}
-			
+
 		};
 
-		videoView.setMediaController(mediaController);
-		
-	}
+		mediaController.setPrevNextListeners(new OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				Log.i(TAG, "setPrevNextListeners next ");
+				int position = mPlayPosition + 1;
+				if (position < mFileList.size()) {
+					mPlayPosition++;
+					playVideo(mPlayPosition);
+				}
+
+			}
+		}, new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Log.i(TAG, "setPrevNextListeners pre ");
+				int position = mPlayPosition - 1;
+				if (position < mFileList.size()) {
+					mPlayPosition--;
+					playVideo(mPlayPosition);
+				}
+			}
+		});
+		videoView.setMediaController(mediaController);
+	}
 
 	private void initViews() {
-		videoView = (VideoView)findViewById(R.id.videolayout);
-		
+		videoView = (VideoView) findViewById(R.id.videolayout);
+		mFileList = new ArrayList<DataWrapper>();
 	}
 
+	private void getIntentValue() {
+		ArrayList<Parcelable> playlist = getIntent().getExtras()
+				.getParcelableArrayList("videourl");
 
-	private void getIntentValues() {
-		Bundle bundle = getIntent().getExtras();
-		ArrayList<Parcelable> playList = null;
-		if (bundle != null)
-			playList = bundle.getParcelableArrayList("videourl");
-		
-		playVideo(playList);
+		for (int i = 0; i < playlist.size(); i++) {
+			mFileList.add((DataWrapper) playlist.get(i));
+		}
 	}
 
+	private void playVideo(int position) {
+		videoView.setVideoPath(mFileList.get(position).filePath);
 
-	private void playVideo(ArrayList<Parcelable> playList) {
-		String[] videoPlay = (String[]) playList.toArray();
-		videoView.setVideoPath(videoPlay[0]);
-		
 	}
 }

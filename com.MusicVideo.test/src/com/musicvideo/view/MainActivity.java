@@ -17,36 +17,72 @@ public class MainActivity extends ActionBarActivity {
 
 	private Button musicButton;
 	private Button videoButton;
-	private ArrayList<MusicWrapper> mFileList;
+	private ArrayList<DataWrapper> mFileList;
+	private ArrayList<DataWrapper> mVideoList;
 	private ArrayList<String> mMusicSourceAryList;
+	private ArrayList<String> mVideoSourceAryList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
 		initViews();
+		
+		addMusicData();
+		
+		addVideoData();
+		
 		setListener();
 		
 		setData(mMusicSourceAryList);
+		
+		setVideoData(mVideoSourceAryList);
 	}
 
 	private void setData(ArrayList<String> musicSourcePath) {
 		// mFileList.addAll("http://127.0.0.1:50080/dav/home/Music/A-Lin/%E6%88%91%E5%80%91%E6%9C%83%E6%9B%B4%E5%A5%BD%E7%9A%84/01%20Intro.m4a?session=6278047c683f80b9c8b2bc44f8a6bc43746231c9&login=user");
 		// mFileList.add("http://127.0.0.1:50080/dav/home/Music/Avril%20Lavigne%20(%E8%89%BE%E8%96%87%E5%85%92)_Avril%20Lavigne%20feat_/Let%20Me%20Go/01%20Let%20Me%20Go.m4a?session=6278047c683f80b9c8b2bc44f8a6bc43746231c9&login=user");
 		for (int i = 0; i < musicSourcePath.size(); i++) {
-			MusicWrapper wrapper = new MusicWrapper();
-			wrapper.musicPath = musicSourcePath.get(i);
+			DataWrapper wrapper = new DataWrapper();
+			wrapper.filePath = musicSourcePath.get(i);
 			mFileList.add(wrapper);
 		}
 	}
+	
+	private void setVideoData(ArrayList<String> videoSourcePath) {
+		// mFileList.addAll("http://127.0.0.1:50080/dav/home/Music/A-Lin/%E6%88%91%E5%80%91%E6%9C%83%E6%9B%B4%E5%A5%BD%E7%9A%84/01%20Intro.m4a?session=6278047c683f80b9c8b2bc44f8a6bc43746231c9&login=user");
+		// mFileList.add("http://127.0.0.1:50080/dav/home/Music/Avril%20Lavigne%20(%E8%89%BE%E8%96%87%E5%85%92)_Avril%20Lavigne%20feat_/Let%20Me%20Go/01%20Let%20Me%20Go.m4a?session=6278047c683f80b9c8b2bc44f8a6bc43746231c9&login=user");
+		for (int i = 0; i < videoSourcePath.size(); i++) {
+			DataWrapper wrapper = new DataWrapper();
+			wrapper.filePath = videoSourcePath.get(i);
+			mVideoList.add(wrapper);
+		}
+	}
+
 
 	private void initViews() {
 		musicButton = (Button) findViewById(R.id.music);
 		videoButton = (Button) findViewById(R.id.video);
-		mFileList = new ArrayList<MusicWrapper>();
+		mFileList = new ArrayList<DataWrapper>();
+		mVideoList = new ArrayList<DataWrapper>();
 		mMusicSourceAryList = new ArrayList<String>();
-		mMusicSourceAryList.add("http://programmerguru.com/android-tutorial/wp-content/uploads/2013/04/hosannatelugu.mp3");
-		mMusicSourceAryList.add("http://programmerguru.com/android-tutorial/wp-content/uploads/2013/04/hosannatelugu.mp3");
+		mVideoSourceAryList = new ArrayList<String>();
+		
+	}
+	
+	private void addMusicData(){
+		mMusicSourceAryList.add("http://192.168.2.152/dav/home/Music/%E4%BF%A1%E6%A8%82%E5%9C%98/%E6%8C%91%E4%BF%A1/01%20%E5%BE%9E%E4%BB%8A%E4%BB%A5%E5%BE%8C.m4a?session=9c32b9b41d76be25e91a4507e55f5deea5ce06e2&login=user");
+		mMusicSourceAryList.add("http://192.168.2.152/dav/home/Music/%E4%BF%A1%E6%A8%82%E5%9C%98/%E6%8C%91%E4%BF%A1/01%20%E5%BE%9E%E4%BB%8A%E4%BB%A5%E5%BE%8C.m4a?session=9c32b9b41d76be25e91a4507e55f5deea5ce06e2&login=user");
+		mMusicSourceAryList.add("http://192.168.2.152/dav/home/Music/%E4%BF%A1%E6%A8%82%E5%9C%98/%E6%8C%91%E4%BF%A1/01%20%E5%BE%9E%E4%BB%8A%E4%BB%A5%E5%BE%8C.m4a?session=9c32b9b41d76be25e91a4507e55f5deea5ce06e2&login=user");
+
+	}
+
+	private void addVideoData() {
+		mVideoSourceAryList.add("http://192.168.2.152/dav/home/Videos/a00006.mp4?session=f0f9f8216c6c543e82674da685cbfa5cb0b54af0&login=user");
+		mVideoSourceAryList.add("http://192.168.2.152/dav/home/Videos/a00006.mp4?session=f0f9f8216c6c543e82674da685cbfa5cb0b54af0&login=user");
+		mVideoSourceAryList.add("http://192.168.2.152/dav/home/Videos/a00006.mp4?session=f0f9f8216c6c543e82674da685cbfa5cb0b54af0&login=user");
+
 	}
 
 	private void setListener() {
@@ -77,11 +113,11 @@ public class MainActivity extends ActionBarActivity {
 			// TODO
 			Intent intent = new Intent();
 			Bundle bundle = new Bundle();
-			// bundle.putParcelableArrayList("videourl",
-			// (ArrayList<? extends Parcelable>) mFileList);
+			 bundle.putParcelableArrayList("videourl",
+			 (ArrayList<? extends Parcelable>) mVideoList);
 
 			intent.putExtras(bundle);
-			intent.setClass(getApplicationContext(), MusicActivity.class);
+			intent.setClass(getApplicationContext(), VideoActivity.class);
 			startActivity(intent);
 		}
 	};
