@@ -101,9 +101,7 @@ public class VideoActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Log.i(TAG, "setPrevNextListeners next ");
-				int position = mPlayPosition + 1;
-				if (position < mFileList.size()) {
-					mPlayPosition++;
+				if (++mPlayPosition < mFileList.size()) {
 					playVideo(mPlayPosition);
 				}
 
@@ -113,9 +111,7 @@ public class VideoActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Log.i(TAG, "setPrevNextListeners pre ");
-				int position = mPlayPosition - 1;
-				if (position < mFileList.size()) {
-					mPlayPosition--;
+				if (--mPlayPosition < mFileList.size()) {
 					playVideo(mPlayPosition);
 				}
 			}

@@ -192,9 +192,7 @@ public class MusicActivity extends Activity implements OnPreparedListener,
 			@Override
 			public void onClick(View v) {
 				Log.i("music", "next");
-				int position = mPlayPosition + 1;
-				if (position < mFileList.size()) {
-					mPlayPosition++;
+				if (++mPlayPosition < mFileList.size()) {
 					playSongs(mediaPlayer, mPlayPosition);
 				}
 				
@@ -204,9 +202,7 @@ public class MusicActivity extends Activity implements OnPreparedListener,
 			@Override
 			public void onClick(View v) {
 				Log.i("music", "pre");
-				int position = mPlayPosition - 1;
-				if (position < mFileList.size()) {
-					mPlayPosition--;
+				if (--mPlayPosition < mFileList.size()) {
 					playSongs(mediaPlayer, mPlayPosition);
 				}
 
