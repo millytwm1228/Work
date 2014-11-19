@@ -37,13 +37,13 @@ public class MainActivity extends ActionBarActivity {
 		addVideoData();
 
 		addPhotoData();
-		
+
 		setListener();
 
 		setMusicData(mMusicSourceAryList);
 
 		setVideoData(mVideoSourceAryList);
-		
+
 		setPhotoData(mPhotoSourceAryList);
 	}
 
@@ -66,10 +66,11 @@ public class MainActivity extends ActionBarActivity {
 			mVideoList.add(wrapper);
 		}
 	}
-	
+
 	private void setPhotoData(ArrayList<String> photoSourcePath) {
 		// mFileList.addAll("http://127.0.0.1:50080/dav/home/Music/A-Lin/%E6%88%91%E5%80%91%E6%9C%83%E6%9B%B4%E5%A5%BD%E7%9A%84/01%20Intro.m4a?session=6278047c683f80b9c8b2bc44f8a6bc43746231c9&login=user");
 		// mFileList.add("http://127.0.0.1:50080/dav/home/Music/Avril%20Lavigne%20(%E8%89%BE%E8%96%87%E5%85%92)_Avril%20Lavigne%20feat_/Let%20Me%20Go/01%20Let%20Me%20Go.m4a?session=6278047c683f80b9c8b2bc44f8a6bc43746231c9&login=user");
+
 		for (int i = 0; i < photoSourcePath.size(); i++) {
 			DataWrapper wrapper = new DataWrapper();
 			wrapper.filePath = photoSourcePath.get(i);
@@ -109,14 +110,30 @@ public class MainActivity extends ActionBarActivity {
 				.add("http://192.168.2.152/dav/home/Videos/a00006.mp4?session=f0f9f8216c6c543e82674da685cbfa5cb0b54af0&login=user");
 
 	}
-	
+
 	private void addPhotoData() {
+		
+
 		mPhotoSourceAryList
-				.add("http://192.168.2.152/dav/home/Music/%E4%BF%A1%E6%A8%82%E5%9C%98/%E6%8C%91%E4%BF%A1/01%20%E5%BE%9E%E4%BB%8A%E4%BB%A5%E5%BE%8C.m4a?session=9c32b9b41d76be25e91a4507e55f5deea5ce06e2&login=user");
+				.add("http://img.my.csdn.net/uploads/201407/26/1406383299_1976.jpg");
 		mPhotoSourceAryList
-				.add("http://192.168.2.152/dav/home/Music/%E4%BF%A1%E6%A8%82%E5%9C%98/%E6%8C%91%E4%BF%A1/01%20%E5%BE%9E%E4%BB%8A%E4%BB%A5%E5%BE%8C.m4a?session=9c32b9b41d76be25e91a4507e55f5deea5ce06e2&login=user");
+				.add("http://img.my.csdn.net/uploads/201407/26/1406383291_6518.jpg");
 		mPhotoSourceAryList
-				.add("http://192.168.2.152/dav/home/Music/%E4%BF%A1%E6%A8%82%E5%9C%98/%E6%8C%91%E4%BF%A1/01%20%E5%BE%9E%E4%BB%8A%E4%BB%A5%E5%BE%8C.m4a?session=9c32b9b41d76be25e91a4507e55f5deea5ce06e2&login=user");
+				.add("http://img.my.csdn.net/uploads/201407/26/1406383291_8239.jpg");
+
+		mPhotoSourceAryList
+		.add("http://img.my.csdn.net/uploads/201407/26/1406383275_3977.jpg");
+		mPhotoSourceAryList
+		.add("http://img.my.csdn.net/uploads/201407/26/1406383265_8550.jpg");
+		mPhotoSourceAryList
+		.add("http://img.my.csdn.net/uploads/201407/26/1406383264_3954.jpg");
+		mPhotoSourceAryList
+		.add("http://img.my.csdn.net/uploads/201407/26/1406383264_4787.jpg");
+		mPhotoSourceAryList
+		.add("http://img.my.csdn.net/uploads/201407/26/1406383264_8243.jpg");
+		mPhotoSourceAryList
+		.add("http://img.my.csdn.net/uploads/201407/26/1406383248_3693.jpg");
+				
 
 	}
 
@@ -157,7 +174,7 @@ public class MainActivity extends ActionBarActivity {
 			startActivity(intent);
 		}
 	};
-	
+
 	OnClickListener photoOnClickListener = new OnClickListener() {
 
 		@Override
@@ -165,8 +182,8 @@ public class MainActivity extends ActionBarActivity {
 			// TODO
 			Intent intent = new Intent();
 			Bundle bundle = new Bundle();
-//			bundle.putParcelableArrayList("photourl",
-//					(ArrayList<? extends Parcelable>) mPhotoList);
+			bundle.putParcelableArrayList("photourl",
+					(ArrayList<? extends Parcelable>) mPhotoList);
 
 			intent.putExtras(bundle);
 			intent.setClass(getApplicationContext(), PhotoActivity.class);
