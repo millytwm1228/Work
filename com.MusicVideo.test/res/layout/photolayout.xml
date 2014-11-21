@@ -11,24 +11,23 @@
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
+            android:layout_height="48dp" >
 
-            <!-- <ImageView
+            <!--
+                 <ImageView
                 android:id="@+id/imageview"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                 /> -->
+                 />
+            -->
 
-            <TextView
-                android:id="@+id/textview"
-                style="@style/ImageTitle"
-                android:text="@string/lightning" />
         </RelativeLayout>
 
-      <!--   <RelativeLayout
+        <!--
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" >
 
@@ -60,7 +59,8 @@
             <TextView
                 style="@style/ImageTitle"
                 android:text="@string/natural_wall" />
-        </RelativeLayout> -->
+        </RelativeLayout>
+        -->
     </ViewFlipper>
 
     <LinearLayout
@@ -74,11 +74,13 @@
             android:layout_marginRight="10dp"
             android:background="@android:drawable/ic_media_play" />
 
-      <!--   <Button
+        <!--
+             <Button
             android:id="@+id/stop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:drawable/ic_media_pause" /> -->
+            android:background="@android:drawable/ic_media_pause" />
+        -->
     </LinearLayout>
 
     <ImageView
@@ -96,5 +98,12 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:src="@drawable/swipe_right" />
+    
+    <TextView
+        android:id="@+id/textview"
+        style="@style/ImageTitle"
+        android:layout_alignParentBottom="true">
+        
+    </TextView>
 
 </RelativeLayout>

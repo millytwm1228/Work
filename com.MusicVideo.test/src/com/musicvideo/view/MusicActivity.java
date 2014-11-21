@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnBufferingUpdateListener;
@@ -24,53 +25,66 @@ import com.example.com.musicvideo.test.R;
 
 public class MusicActivity extends Activity implements OnPreparedListener,
 		MediaController.MediaPlayerControl {
-	
+
 	private static final String TAG = "AudioPlayer";
-	
+
 	private MediaPlayer mediaPlayer;
-	
+
 	private MediaController mediaController;
-	
+
 	private Handler handler = new Handler();
-	
+
 	private ArrayList<DataWrapper> mFileList;
-	
+
 	private int mPlayPosition;
+
+	private ProgressDialog pDialog;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.musiclayout);
-		
+
 		initViews();
-		
+
 		getIntentValue();
-		
-		initMediaplayer();
-		
+
+		initMediaplayer(mFileList.get(0).filePath);
+
 		setMediaListener();
 
 	}
 
-	private void initMediaplayer() {
+	private void initMediaplayer(String path) {
+		showDialog();
 		mediaPlayer = new MediaPlayer();
+		mediaPlayer.reset();
 		mediaPlayer.setOnPreparedListener(this);
 		mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
 		mediaController = new MediaController(this);
 
 		try {
-			if(mFileList.size() > 0)
-			mediaPlayer.setDataSource(mFileList.get(0).filePath);
-			mPlayPosition++;
+			// if(mFileList.size() > 0)
+			mediaPlayer.setDataSource(path);
+			// mPlayPosition++;
 			// play songs (assets)
 			// AssetFileDescriptor descriptor = getAssets().openFd("test.mp3");
 			// mediaPlayer.setDataSource(descriptor.getFileDescriptor(),
 			// descriptor.getStartOffset(), descriptor.getLength());
 			mediaPlayer.prepareAsync();
-			mediaPlayer.start();
+//			mediaPlayer.start();
 		} catch (IOException e) {
 		}
+	}
+	
+	
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		mediaPlayer.release();
 	}
 
 	private void initViews() {
@@ -87,41 +101,44 @@ public class MusicActivity extends Activity implements OnPreparedListener,
 	}
 
 	private void setMediaListener() {
-		mediaPlayer.setOnBufferingUpdateListener(new OnBufferingUpdateListener() {
-			
-			@Override
-			public void onBufferingUpdate(MediaPlayer mp, int percent) {
-				Log.i(TAG, "onBufferingUpdate "+percent);
-				
-			}
-		});
+		mediaPlayer
+				.setOnBufferingUpdateListener(new OnBufferingUpdateListener() {
+
+					@Override
+					public void onBufferingUpdate(MediaPlayer mp, int percent) {
+						Log.i(TAG, "onBufferingUpdate " + percent);
+
+					}
+				});
 		mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
-			
+
 			@Override
 			public void onCompletion(MediaPlayer mp) {
 				Log.i(TAG, "OnCompletionListener ");
+				showNext();
 
-				
 			}
 		});
 		mediaPlayer.setOnErrorListener(new OnErrorListener() {
-			
+
 			@Override
 			public boolean onError(MediaPlayer mp, int what, int extra) {
-				Log.i(TAG, "onError "+what+" extra "+extra);
+				Log.i(TAG, "onError " + what + " extra " + extra);
 				return false;
 			}
 		});
 		mediaPlayer.setOnInfoListener(new OnInfoListener() {
-			
+
 			@Override
 			public boolean onInfo(MediaPlayer mp, int what, int extra) {
-				Log.i(TAG, "onInfo "+what+" extra "+extra);
+				Log.i(TAG, "onInfo " + what + " extra " + extra);
 				return false;
 			}
 		});
-		
+
 	}
+	
+	
 
 	@Override
 	protected void onStop() {
@@ -185,6 +202,8 @@ public class MusicActivity extends Activity implements OnPreparedListener,
 
 	public void onPrepared(final MediaPlayer mediaPlayer) {
 		Log.d(TAG, "onPrepared");
+		if (pDialog != null)
+			pDialog.dismiss();
 		mediaController.setMediaPlayer(this);
 		mediaController.setAnchorView(findViewById(R.id.musiclayout));
 		mediaController.setPrevNextListeners(new OnClickListener() {
@@ -192,19 +211,15 @@ public class MusicActivity extends Activity implements OnPreparedListener,
 			@Override
 			public void onClick(View v) {
 				Log.i("music", "next");
-				if (++mPlayPosition < mFileList.size()) {
-					playSongs(mediaPlayer, mPlayPosition);
-				}
-				
+				showNext();
+
 			}
 		}, new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				Log.i("music", "pre");
-				if (--mPlayPosition < mFileList.size()) {
-					playSongs(mediaPlayer, mPlayPosition);
-				}
+				showPrevious();
 
 			}
 		});
@@ -214,6 +229,8 @@ public class MusicActivity extends Activity implements OnPreparedListener,
 				mediaController.show(0);
 			}
 		});
+		mediaPlayer.start();
+
 	}
 
 	@Override
@@ -222,24 +239,59 @@ public class MusicActivity extends Activity implements OnPreparedListener,
 		return 0;
 	}
 
-	private void playSongs(final MediaPlayer mediaPlayer , int position) {
-		try {
-			mediaPlayer.reset();
-			mediaPlayer.setDataSource(mFileList.get(position).filePath);
-			mediaPlayer.prepare();
-			mediaPlayer.start();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	// private void playSongs(final MediaPlayer mediaPlayer , int position) {
+	// try {
+	// mediaPlayer.reset();
+	// mediaPlayer.setDataSource(mFileList.get(position).filePath);
+	// mediaPlayer.prepare();
+	// mediaPlayer.start();
+	// } catch (IllegalArgumentException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// } catch (SecurityException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// } catch (IllegalStateException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// } catch (IOException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// }
+
+	private void showDialog() {
+		// Create a progressbar
+		pDialog = new ProgressDialog(MusicActivity.this);
+		// Set progressbar title
+		pDialog.setTitle("Please wait...");
+		// Set progressbar message
+		pDialog.setMessage("Buffering...");
+		pDialog.setIndeterminate(false);
+		pDialog.setCancelable(false);
+		// Show progressbar
+		pDialog.show();
+	}
+
+	private void showNext() {
+		if (mPlayPosition + 1 < mFileList.size()) {
+			// playSongs(mediaPlayer, mPlayPosition);
+			initMediaplayer(mFileList.get(++mPlayPosition).filePath);
+		} else {
+			initMediaplayer(mFileList.get(mPlayPosition = 0).filePath);
+
 		}
 	}
+
+	private void showPrevious() {
+		if (mPlayPosition - 1 < mFileList.size()) {
+			// playSongs(mediaPlayer, mPlayPosition);
+			initMediaplayer(mFileList.get(--mPlayPosition).filePath);
+		} else {
+			initMediaplayer(mFileList.get(mPlayPosition = mFileList
+					.size() - 1).filePath);
+
+		}
+	}
+
 }

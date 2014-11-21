@@ -92,49 +92,52 @@ public class MainActivity extends ActionBarActivity {
 	}
 
 	private void addMusicData() {
-		mMusicSourceAryList
-				.add("http://192.168.2.152/dav/home/Music/%E4%BF%A1%E6%A8%82%E5%9C%98/%E6%8C%91%E4%BF%A1/01%20%E5%BE%9E%E4%BB%8A%E4%BB%A5%E5%BE%8C.m4a?session=9c32b9b41d76be25e91a4507e55f5deea5ce06e2&login=user");
-		mMusicSourceAryList
-				.add("http://192.168.2.152/dav/home/Music/%E4%BF%A1%E6%A8%82%E5%9C%98/%E6%8C%91%E4%BF%A1/01%20%E5%BE%9E%E4%BB%8A%E4%BB%A5%E5%BE%8C.m4a?session=9c32b9b41d76be25e91a4507e55f5deea5ce06e2&login=user");
-		mMusicSourceAryList
-				.add("http://192.168.2.152/dav/home/Music/%E4%BF%A1%E6%A8%82%E5%9C%98/%E6%8C%91%E4%BF%A1/01%20%E5%BE%9E%E4%BB%8A%E4%BB%A5%E5%BE%8C.m4a?session=9c32b9b41d76be25e91a4507e55f5deea5ce06e2&login=user");
-
+		for (int i = 0; i < 5; i++) {
+			mMusicSourceAryList
+					.add("http://192.168.2.152/dav/home/Music/%E4%BF%A1%E6%A8%82%E5%9C%98/%E6%8C%91%E4%BF%A1/01%20%E5%BE%9E%E4%BB%8A%E4%BB%A5%E5%BE%8C.m4a?session=9c32b9b41d76be25e91a4507e55f5deea5ce06e2&login=user");
+			mMusicSourceAryList
+					.add("http://download.wavetlan.com/SVV/Media/HTTP/MP3/Helix_Mobile_Producer/HelixMobileProducer_test1_MPEG2_Mono_CBR_40kbps_16000Hz.mp3");
+			mMusicSourceAryList
+					.add("http://download.wavetlan.com/SVV/Media/HTTP/MP3/Helix_Mobile_Producer/HelixMobileProducer_test4_MPEG1_Stereo_CBR_320kbps_44100Hz.mp3");
+		}
 	}
 
 	private void addVideoData() {
-		mVideoSourceAryList
-				.add("http://192.168.2.152/dav/home/Videos/a00006.mp4?session=f0f9f8216c6c543e82674da685cbfa5cb0b54af0&login=user");
-		mVideoSourceAryList
-				.add("http://192.168.2.152/dav/home/Videos/a00006.mp4?session=f0f9f8216c6c543e82674da685cbfa5cb0b54af0&login=user");
-		mVideoSourceAryList
-				.add("http://192.168.2.152/dav/home/Videos/a00006.mp4?session=f0f9f8216c6c543e82674da685cbfa5cb0b54af0&login=user");
+		for (int i = 0; i < Config.COUNT; i++) {
 
+			mVideoSourceAryList
+					.add("http://192.168.2.152/dav/home/Videos/a00006.mp4?session=f0f9f8216c6c543e82674da685cbfa5cb0b54af0&login=user");
+			mVideoSourceAryList
+			.add("http://192.168.2.152/dav/home/Videos/a00021.mp4?session=f0f9f8216c6c543e82674da685cbfa5cb0b54af0&login=user");
+			mVideoSourceAryList
+			.add("http://192.168.2.152/dav/home/Videos/a00024.mp4?session=f0f9f8216c6c543e82674da685cbfa5cb0b54af0&login=user");
+			mVideoSourceAryList
+			.add("http://192.168.2.152/dav/home/Videos/a00022.3gp?session=f0f9f8216c6c543e82674da685cbfa5cb0b54af0&login=user");
+		}
 	}
 
 	private void addPhotoData() {
-		
 
-		mPhotoSourceAryList
-				.add("http://img.my.csdn.net/uploads/201407/26/1406383299_1976.jpg");
-		mPhotoSourceAryList
-				.add("http://img.my.csdn.net/uploads/201407/26/1406383291_6518.jpg");
-		mPhotoSourceAryList
-				.add("http://img.my.csdn.net/uploads/201407/26/1406383291_8239.jpg");
-
-		mPhotoSourceAryList
-		.add("http://img.my.csdn.net/uploads/201407/26/1406383275_3977.jpg");
-		mPhotoSourceAryList
-		.add("http://img.my.csdn.net/uploads/201407/26/1406383265_8550.jpg");
-		mPhotoSourceAryList
-		.add("http://img.my.csdn.net/uploads/201407/26/1406383264_3954.jpg");
-		mPhotoSourceAryList
-		.add("http://img.my.csdn.net/uploads/201407/26/1406383264_4787.jpg");
-		mPhotoSourceAryList
-		.add("http://img.my.csdn.net/uploads/201407/26/1406383264_8243.jpg");
-		mPhotoSourceAryList
-		.add("http://img.my.csdn.net/uploads/201407/26/1406383248_3693.jpg");
-				
-
+		for (int i = 0; i < Config.COUNT; i++) {
+			mPhotoSourceAryList
+					.add("http://img.my.csdn.net/uploads/201407/26/1406383299_1976.jpg");
+			mPhotoSourceAryList
+					.add("http://img.my.csdn.net/uploads/201407/26/1406383291_6518.jpg");
+			mPhotoSourceAryList
+					.add("http://img.my.csdn.net/uploads/201407/26/1406383291_8239.jpg");
+			mPhotoSourceAryList
+					.add("http://img.my.csdn.net/uploads/201407/26/1406383275_3977.jpg");
+			mPhotoSourceAryList
+					.add("http://img.my.csdn.net/uploads/201407/26/1406383265_8550.jpg");
+			mPhotoSourceAryList
+					.add("http://img.my.csdn.net/uploads/201407/26/1406383264_3954.jpg");
+			mPhotoSourceAryList
+					.add("http://img.my.csdn.net/uploads/201407/26/1406383264_4787.jpg");
+			mPhotoSourceAryList
+					.add("http://img.my.csdn.net/uploads/201407/26/1406383264_8243.jpg");
+			mPhotoSourceAryList
+					.add("http://img.my.csdn.net/uploads/201407/26/1406383248_3693.jpg");
+		}
 	}
 
 	private void setListener() {
